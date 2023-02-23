@@ -30,6 +30,8 @@ const CrudTable = ({
               <TableArrow
                 el={el}
                 key={el.id}
+                setDataToEdit={setDataToEdit}
+                deleteKnight={deleteKnight}
               />
             ))
           )}

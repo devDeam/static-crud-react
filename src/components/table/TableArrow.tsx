@@ -1,14 +1,27 @@
 import React from "react";
 import KNIGHTS from "../../knights.model";
 
-const TableArrow = ({el}: {el: KNIGHTS}) => {
+const TableArrow = ({
+  el,
+  setDataToEdit,
+  deleteKnight,
+}: {
+  el: KNIGHTS;
+  setDataToEdit: React.SetStateAction<KNIGHTS> | null | any;
+  deleteKnight: Function;
+}) => {
+  let { name, constellation, id } = el;
   return (
     <tr>
-      <td>{el.name}</td>
-      <td>{el.constellation}</td>
+      <td>{name}</td>
+      <td>{constellation}</td>
       <td>
-        <button>Editar</button> &nbsp;
-        <button>Eliminar</button>
+        <button
+          onClick={()=>setDataToEdit(el)}
+        >Editar</button> &nbsp;
+        <button
+          onClick={()=>deleteKnight(id)}
+        >Eliminar</button>
       </td>
     </tr>
   );

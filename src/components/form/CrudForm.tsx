@@ -14,12 +14,20 @@ const CrudForm = ({
 }: {
   createKnight: Function;
   updateKnight: Function;
-  dataToEdit: KNIGHTS | boolean | null;
+  dataToEdit: KNIGHTS | null;
   setDataToEdit: React.SetStateAction<KNIGHTS> | null | any;
 }): JSX.Element => {
 
   // States donde se almacena el valor de los inputs del form.
   const [form, setForm] = useState<KNIGHTS>(INITIALFORM);
+
+  useEffect(()=>{
+    if(dataToEdit){
+      setForm(dataToEdit)
+    } else {
+      setForm(INITIALFORM)
+    }
+  }, [dataToEdit])
 
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
@@ -50,7 +58,7 @@ const CrudForm = ({
 
   return (
     <div>
-      <h3>Agregar</h3>
+      <h3>{dataToEdit ? "Editar" : "Agregar"}</h3>
       <form onSubmit={(e) => handleSubmit(e)}>
         <input
           type="text"

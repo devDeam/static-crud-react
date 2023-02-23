@@ -33,7 +33,7 @@ const initialDb: KNIGHTS[] = [
 
 const CrudApp = (): JSX.Element => {
   const [db, setDb] = useState<KNIGHTS[]>(initialDb);
-  const [dataToEdit, setDataToEdit] = useState<KNIGHTS | boolean | null>(null);
+  const [dataToEdit, setDataToEdit] = useState<KNIGHTS | null>(null);
 
   const createKnight = (data: KNIGHTS): void => {
     let lastPosition: number = db.length-1;
@@ -45,23 +45,32 @@ const CrudApp = (): JSX.Element => {
     console.log(data)
   }
   const updateKnight = (data: KNIGHTS): void => {
-
+    let newData: KNIGHTS[] = db.map(el=> el.id === data.id ? data : el);
+    setDb(newData);
   }
   const deleteKnight = (id: number): void => {
-    db.splice(id, 1);
+    let isDelete: boolean = confirm(`¿Estás seguro de eliminar el registro con el id = '${id}' ?`);
+    if(isDelete){
+      let newData: KNIGHTS[] = db.filter(el => el.id !== id);
+      setDb(newData);
+    }else{
+      return;
+    }
   }
   return (
     <div>
         <h2>CRUD App</h2>
-        <CrudForm createKnight={createKnight}
-        updateKnight={updateKnight}
-        dataToEdit={dataToEdit}
-        setDataToEdit={setDataToEdit}
-        />
-        <CrudTable data={db}
-        setDataToEdit={setDataToEdit}
-        deleteKnight={deleteKnight}
-        />
+        <article className="grid-1-2">
+          <CrudForm createKnight={createKnight}
+          updateKnight={updateKnight}
+          dataToEdit={dataToEdit}
+          setDataToEdit={setDataToEdit}
+          />
+          <CrudTable data={db}
+          setDataToEdit={setDataToEdit}
+          deleteKnight={deleteKnight}
+          />
+        </article>
     </div>
   )
 }
